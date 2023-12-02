@@ -1,0 +1,16 @@
+awk '
+BEGIN	{
+			elf=1
+			max=0
+		}
+/^$/ 	{
+			printf("%d: %d\n", elf, max)
+			elf++
+			max=0
+			next
+		}
+// 		{
+			max += $1
+		}
+' | sort -t: +1 -n | tail -n3 | awk 'BEGIN{total=0}//{total+=$2}END{print total}'
+

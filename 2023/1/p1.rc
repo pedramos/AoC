@@ -1,0 +1,5 @@
+#!/usr/bin/env rc
+
+input = $1
+
+tr -d '[a-z]' < $1 | 9 sed  's/^([0-9]).*([0-9])$/\1\2/g' | awk 'BEGIN{ c = 0 } $1 >= 10 {c += $0} $1 < 10 {c += ($1 * 11)} END{print c}'
