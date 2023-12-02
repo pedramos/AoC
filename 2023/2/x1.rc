@@ -1,0 +1,43 @@
+#!/usr/bin/env rc
+
+< $1 \
+ 9 sed '
+	s/Game ([0-9]+):/\1\n	/g
+	s/,/\n	/g
+	s/;/\n---\n	/g
+'  | 
+awk '
+	BEGIN{
+		ans = 0
+		game = 0
+		isok = 0
+	}
+	/^[0-9]/ {
+		if( isok == 1 ) {
+			print game
+			ans += game
+		}
+		game = $1
+		isok = 1
+	}
+	/green/ {
+		if( $1 > 13) { isok=0 } 
+	}
+	/blue/ {
+		if($1 > 14){ isok=0 }
+	}
+	/red/ {
+		if($1 > 12) { isok=0} 
+	}
+	END{
+		if( isok == 1 ) {
+			ans += game
+		}
+		print "==========="
+		print ans
+	}
+'
+
+
+
+

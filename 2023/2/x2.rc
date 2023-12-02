@@ -1,0 +1,35 @@
+#!/usr/bin/env rc
+
+# chmod +x $%
+
+< $1 \
+ 9 sed '
+	s/Game ([0-9]+):/\1\n	/g
+	s/,/\n	/g
+	s/;/\n---\n	/g
+'  | 
+awk '
+	/^[0-9]/ {
+		print green*red*blue
+		ans = ans + green*red*blue
+		green = 0
+		red = 0
+		blue = 0
+	}
+	$0 ~ /green/ && $1 > green {
+		green = $1
+	}
+	$0 ~ /red/ && $1 > red {
+		red = $1
+	}
+	$0 ~ /blue/ && $1 > blue {
+		blue = $1
+	}
+	END{
+		ans = ans + green*red*blue
+		print "==========="
+		print ans
+	}
+'
+
+
