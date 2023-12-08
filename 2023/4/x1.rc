@@ -1,0 +1,23 @@
+#!/usr/bin/env rc
+
+< $1 \
+	9 awk -F '[:\|]' '{
+		win = win" "$2
+		got = got" "$3
+		if (length(wsize) == 0) {split(win, wsize, " ")}
+		if (length(gsize) == 0) {split(got, gsize, " ")}
+		totalcards++ 
+	}
+	END {
+		printf("win = %d %d rho %s\n", totalcards, length(wsize), win)
+		printf("got = %d %d rho %s\n", totalcards, length(gsize), got)
+	}'
+
+n = (rho got)[1]
+final = 0
+op result compare i = 
+	(rho (i take win))[1] > 1:  result = result compare (i - 1)
+	result , ((-1 take (i take win))[1] intersect (-1 take (i take got))[1])
+
+
+result compare n
