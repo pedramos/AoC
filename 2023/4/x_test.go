@@ -15,4 +15,3 @@ func TestPart2(t *testing.T) {
 		t.Errorf("Expected 30, got %d\n", r)
 	}
 }
-
