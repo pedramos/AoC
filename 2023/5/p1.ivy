@@ -1,0 +1,9 @@
+delta = input[2]
+src = input[0]
+dst = input[1]
+
+mask = src rho 0; delta rho 1; (src+delta-1) rho 0
+map = map * mask
+map = map + (iota src ;	dst + iota delta; (src + delta-1)  + iota (100-(src + delta-1)))*(not mask)
+
+
