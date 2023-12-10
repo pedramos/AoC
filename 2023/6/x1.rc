@@ -1,0 +1,38 @@
+#!/usr/bin/env rc
+
+<$1 \
+	9 awk '
+		/Time/ {gsub(/Time: +/, "", $0);  split($0, time, / +/)}
+		/Distance/ {gsub(/Distance: +/, "", $0);  split($0, distance, / +/)}
+		END{
+			result = 1
+			for (i=1 ; i < length(distance) + 1 ; i++) {
+				print "-------"
+				t = time[i]
+				d = distance[i]
+
+				b = t
+				c = -d
+				a = -1
+
+				z0 = (-b - sqrt(b**2 - 4*a*c) ) / (2*a)
+				z1 = (-b + sqrt(b**2 - 4*a*c) ) / (2*a)
+
+				if (z1 < z0) { tmp = z1; z1 = z0; z0 = tmp}				
+
+				printf("z0=%f z1=%f\n", z0, z1)
+	
+				z0 = int(z0 + 0.9)
+				z1 = int(z1)
+				if ((b-z1)*z1 <= distance[i]) { z1--}
+				if ((b-z0)*z0 <= distance[i]) { z0++}
+				printf("t0=%d t1=%d\n",z0, z1)
+				printf("d0=%d d1=%d\n", (b-z0)*z0 ,(b-z1)*z1 )
+				printf("diff=%d\n", z1 - z0 + 1)
+				
+				result *=  z1 - z0 + 1
+			}		
+			printf ("=======\nResult=%d\n", result)
+		}
+
+	' # End of awk 
