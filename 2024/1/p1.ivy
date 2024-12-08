@@ -1,0 +1,19 @@
+sample1 = transp read "sample1.txt"
+input1 = transp read "input1.txt"
+
+"--Part1--"
+op sort x =  x[up x]
+op solve x  =   +/ abs (sort x[1]) - (sort x[2])
+
+'sample=' ; solve sample1
+'input=' ; solve input1
+
+
+"--Part2--"
+
+op x countin y = +/ x ==  y
+op solve2 x =  +/ x[1] * (x[1] @countin x[2])
+
+'sample=' ; solve2 sample1
+
+'input=' ; solve2 input1	
