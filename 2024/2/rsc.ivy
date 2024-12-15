@@ -1,0 +1,8 @@
+sample = ivy@ sys 'read' 'sample1.txt'
+
+op delta x = (1 drop x) - -1 drop x
+op safeInc x = &/ (delta x) in 1 2 3
+op safeDec x = &/ (delta x) in -1 -2 -3
+op safe x = (safeInc x) | safeDec x
+op solve x = +/ safe@ x
+solve sample
